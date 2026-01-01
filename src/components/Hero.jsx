@@ -64,6 +64,8 @@ export default function Hero() {
 const styles = {
   hero: {
     minHeight: "100vh",
+    width: "100%",
+    maxWidth: "100vw",
     background: `
       linear-gradient(
         to bottom,
@@ -79,7 +81,7 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
     textAlign: "center",
-    padding: "24px",
+    padding: "20px 16px",
   },
 
 

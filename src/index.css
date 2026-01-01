@@ -76,3 +76,174 @@ a {
     display: block;
   }
 }
+
+/* html, body {
+  width: 100%;
+  overflow-x: hidden;
+} */
+
+@media (max-width: 768px) {
+  * {
+    max-width: 100vw;
+  }
+
+  section {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+}
+
+/* 🔥 HARD MOBILE NAV RESET */
+@media (max-width: 768px) {
+
+  /* Hide ALL text links in navbar */
+  header nav a {
+    display: none !important;
+  }
+
+  /* Hide brand text */
+  /* .brand-name {
+    display: none !important;
+  } */
+
+  /* Show ONLY logo */
+  header nav img {
+    display: block !important;
+  }
+
+  /* Show ONLY burger */
+  .mobile-nav {
+    display: flex !important;
+  }
+}
+
+section {
+  margin: 0 !important;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.nav-link,
+.mobile-link {
+  position: relative;
+  font-weight: 500;
+  padding-bottom: 4px;
+}
+
+.mobile-link,
+.enroll-link {
+  animation: none;
+}
+
+.mobile-link:active,
+.enroll-link:active {
+  animation: tapBounce 0.18s ease;
+  transform: scale(0.97);
+}
+
+
+.nav-link::after,
+.mobile-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0%;
+  height: 2px;
+  background: linear-gradient(90deg, #d4af37, #1d8cf8);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after,
+.mobile-link:hover::after {
+  width: 100%;
+}
+
+@keyframes tapBounce {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.96);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes slideDownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* MOBILE HAMBURGER */
+.hamburger {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  border-radius: 12px;
+
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Lines */
+.hamburger .line {
+  width: 22px;
+  height: 2.5px;              /* 🔥 IMPORTANT */
+  background-color: #ffffff; /* 🔥 FORCE WHITE */
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.2s ease;
+}
+
+/* OPEN → X */
+.hamburger.open .line:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger.open .line:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.open .line:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Tap feedback */
+.hamburger:active {
+  transform: scale(0.95);
+}
+
+/* 🔥 FORCE HIDE HAMBURGER ON DESKTOP */
+@media (min-width: 769px) {
+  .mobile-nav {
+    display: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .mobile-nav {
+    display: flex !important;
+  }
+}

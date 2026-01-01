@@ -6,6 +6,7 @@ import Footer from "./components/Footer.jsx";
 import About from "./components/About.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
 
+
 export default function App() {
   return (
     <>

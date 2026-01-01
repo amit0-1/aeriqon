@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { useState, useEffect } from "react";
 // import logo from "../assets/logo/aeriqon-icon.png";
 import logoDark from "../assets/logo/aeriqon-icon-dark.png";
@@ -10,6 +11,8 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [darkBg, setDarkBg] = useState(true);
+  const menuLock = useRef(false);
+
 
 
   let touchStartX = 0;
@@ -20,35 +23,43 @@ export default function Navbar() {
   };
 
   const handleTouchEnd = () => {
-    if (touchStartX - touchEndX > 80) {
-      setOpen(false); // swipe left closes
+    if (touchEndX - touchStartX > 80) {
+      setOpen(false); // swipe right closes
     }
   };
 
 
+
   useEffect(() => {
     const handleScroll = () => {
+      if (open) return; // 🔥 KEY FIX — ignore scroll when menu is open
+
       const currentScrollY = window.scrollY;
 
-      setDarkBg(window.scrollY < 400);
-
-      // Add shadow & shrink after 20px
+      setDarkBg(currentScrollY < 400);
       setScrolled(currentScrollY > 20);
 
       if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        // scrolling down
         setShow(false);
       } else {
-        // scrolling up
         setShow(true);
       }
 
       setLastScrollY(currentScrollY);
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
+  }, [lastScrollY, open]);
+
+  // useEffect(() => {
+  //   document.body.style.overflow = open ? "hidden" : "auto";
+  //   return () => {
+  //     document.body.style.overflow = "auto";
+  //   };
+  // }, [open]);
+
+
 
   return (
     <header 
@@ -77,7 +88,7 @@ export default function Navbar() {
               transition: "height 0.3s ease",
             }} 
           />
-          <span style={styles.name}>Aeriqon</span>
+          <span className="brand-name" style={styles.name}>Aeriqon</span>
         </div>
 
         {/* Desktop Links */}
@@ -95,59 +106,58 @@ export default function Navbar() {
           </a>
         </div>
 
-
         <div
-        className="mobile-nav"
-        onClick={() => setOpen(!open)}
-        style={styles.hamburger}
-        aria-label="Menu"
+          className={`mobile-nav hamburger ${open ? "open" : ""}`}
+          onClick={() => setOpen((prev) => !prev)}
+          aria-label="Menu"
+        >
+          <span className="line" />
+          <span className="line" />
+          <span className="line" />
+        </div>
+
+
+
+
+        {/* <div
+          className="mobile-nav"
+          onClick={() => setOpen((prev) => !prev)}
+          style={styles.hamburger}
+          aria-label="Menu"
         >
           ☰
-        </div>
+        </div> */}
+
+
 
       </nav>
 
 
       {/* Mobile Menu */}
-      {/* Overlay */}
+      {/* Mobile Dropdown Menu (Below Navbar) */}
       {open && (
-        
-        <div
-          style={styles.overlay}
-          onClick={() => setOpen(false)}
-        />
+        <div style={styles.mobileDropdown}>
+          <a href="#home" className="mobile-link" onClick={() => setOpen(false)}>
+            Home
+          </a>
+          <a href="#courses" className="mobile-link" onClick={() => setOpen(false)}>
+            Courses
+          </a>
+          <a href="#about" className="mobile-link" onClick={() => setOpen(false)}>
+            About
+          </a>
+      
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSdUD3wLjNoD_etp8iSnxRppIYqTIAdgit7uqPk6umueLmRLfw/viewform"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={styles.enrollLink}
+            onClick={() => setOpen(false)}
+          >
+            Enroll
+          </a>
+        </div>
       )}
-
-      {/* Side Drawer */}
-      <div
-        style={{
-        ...styles.sideMenu,
-        transform: open ? "translateX(0)" : "translateX(-100%)",
-      }}
-        onTouchStart={handleTouchStart}
-        onTouchMove={(e) => (touchEndX = e.changedTouches[0].screenX)}
-        onTouchEnd={handleTouchEnd}
-      >
-      {/* Close Icon */}
-      <div style={styles.close} onClick={() => setOpen(false)}>
-        ✕
-      </div>
-
-        <a href="#home" onClick={() => setOpen(false)}>Home</a>
-        <a href="#courses" onClick={() => setOpen(false)}>Courses</a>
-        <a href="#about" onClick={() => setOpen(false)}>About</a>
-        <a
-          href="https://docs.google.com/forms/d/e/1FAIpQLSdUD3wLjNoD_etp8iSnxRppIYqTIAdgit7uqPk6umueLmRLfw/viewform"
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => setOpen(false)}
-          style={styles.enrollLink}
-        >
-          Enroll
-        </a>
-
-      </div>
-
 
     </header>
   );
@@ -159,24 +169,16 @@ const styles = {
     top: 0,
     zIndex: 1000,
   },
-  // nav: {
-  //   maxWidth: "1200px",
-  //   margin: "12px auto",
-  //   padding: "14px 28px",
-  //   borderRadius: "18px",
-  //   display: "flex",
-  //   justifyContent: "space-between",
-  //   alignItems: "center",
-  // },
 
   nav: {
     position: "sticky",
     top: 0,
     zIndex: 1000,
-    padding: "14px 28px",
-    margin: "20px auto",
-    width: "92%",
-    borderRadius: "18px",
+    width: "100%",
+    maxWidth: "1200px",
+    margin: "12px auto",
+    padding: "12px 16px", // ⬅️ smaller padding for mobile
+    borderRadius: "16px",
     background: "rgba(255,255,255,0.08)",
     backdropFilter: "blur(18px)",
     WebkitBackdropFilter: "blur(18px)",
@@ -187,6 +189,7 @@ const styles = {
     transition: "all 0.35s ease",
   },
 
+  
 
   brand: {
     display: "flex",
@@ -217,32 +220,22 @@ const styles = {
     color: "#fff",
     fontWeight: "600",
   },
-  hamburger: {
-    fontSize: "26px",
-    color: "#fff",
-    cursor: "pointer",
-    padding: "8px 12px",
-    borderRadius: "10px",
-    background: "rgba(255,255,255,0.18)",
-    backdropFilter: "blur(10px)",
-    WebkitBackdropFilter: "blur(10px)",
-  },
 
-  mobileMenu: {
-    position: "absolute",
-    top: "100%",
-    left: "50%",
-    transform: "translateX(-50%)",
-    width: "90%",
-    marginTop: "12px",
-    borderRadius: "16px",
+  mobileDropdown: {
+    width: "92%",
+    margin: "8px auto 0",
     padding: "20px",
+    borderRadius: "16px",
+    background: "rgba(15, 23, 42, 0.95)",
+    backdropFilter: "blur(20px)",
+    WebkitBackdropFilter: "blur(20px)",
     display: "flex",
     flexDirection: "column",
-    gap: "16px",
-    textAlign: "center",
-    zIndex: 999,
+    alignItems: "center",
+    gap: "18px",
+    animation: "slideDownFade 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)",
   },
+
 
   overlay: {
     position: "fixed",
@@ -255,23 +248,34 @@ const styles = {
   },
 
   sideMenu: {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    height: "100vh",
-    width: "70%",
-    maxWidth: "320px",
-    padding: "80px 24px",
-    background: "rgba(255,255,255,0.18)",
-    backdropFilter: "blur(18px)",
-    WebkitBackdropFilter: "blur(18px)",
-    boxShadow: "10px 0 30px rgba(0,0,0,0.25)",
+    position: "absolute",
+    top: "100%",              // ⬅️ below navbar
+    left: "50%",
+    transform: "translateX(-50%)",
+    width: "92%",
+    maxWidth: "420px",
+    padding: "20px",
+    borderRadius: "18px",
+
+    background: "rgba(15, 23, 42, 0.85)",
+    backdropFilter: "blur(20px)",
+    WebkitBackdropFilter: "blur(20px)",
+    border: "1px solid rgba(255,255,255,0.08)",
+
+    boxShadow: "0 30px 60px rgba(0,0,0,0.45)",
+
     display: "flex",
     flexDirection: "column",
-    gap: "24px",
-    zIndex: 999,
-    transition: "transform 0.35s ease",
+    gap: "18px",
+
+    opacity: 0,
+    transformOrigin: "top center",
+    pointerEvents: "none",
+
+    transition: "opacity 0.25s ease, transform 0.25s ease",
   },
+
+
 
   close: {
     position: "absolute",
@@ -283,6 +287,7 @@ const styles = {
   },
 
   enrollLink: {
+    width: "100%",
     padding: "10px 18px",
     borderRadius: "20px",
     background: "linear-gradient(135deg, #1d8cf8, #0b3c5d)",
@@ -297,9 +302,9 @@ const styles = {
     position: "relative",
   },
 
-  linkHover: {
-    color: "#ffffff",
-  },
+  // linkHover: {
+  //   color: "#ffffff",
+  // },
 
   
 

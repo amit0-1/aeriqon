@@ -37,7 +37,10 @@ export default function HomeCards() {
 
 const styles = {
   section: {
-    padding: "80px 20px",
+    width: "100%",
+    maxWidth: "100vw",
+    padding: "60px 16px",
+    boxSizing: "border-box",
     backgroundColor: "#f9fbfd",
     textAlign: "center",
   },

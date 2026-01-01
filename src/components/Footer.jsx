@@ -23,7 +23,6 @@ const styles = {
     backgroundColor: "#0b3c5d",
     color: "#ffffff",
     padding: "40px 20px",
-    marginTop: "80px",
   },
   inner: {
     maxWidth: "1100px",
