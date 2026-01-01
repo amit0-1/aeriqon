@@ -11,7 +11,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [darkBg, setDarkBg] = useState(true);
-  const menuLock = useRef(false);
+  // const menuLock = useRef(false);
 
 
 
@@ -97,7 +97,7 @@ export default function Navbar() {
           <a href="#courses" className="nav-link">Courses</a>
           <a href="#about" className="nav-link">About</a>
           <a
-            href="https://docs.google.com/forms/d/e/1FAIpQLSdUD3wLjNoD_etp8iSnxRppIYqTIAdgit7uqPk6umueLmRLfw/viewform"
+            href="https://docs.google.com/forms/d/e/1FAIpQLSfAlh5oVrzCdQddUphKbKpTpVHVM_AG0l9l4yxs56_8ZU0fRg/viewform?usp=header"
             target="_blank"
             rel="noopener noreferrer"
             style={styles.enrollBtn}
@@ -148,7 +148,7 @@ export default function Navbar() {
           </a>
       
           <a
-            href="https://docs.google.com/forms/d/e/1FAIpQLSdUD3wLjNoD_etp8iSnxRppIYqTIAdgit7uqPk6umueLmRLfw/viewform"
+            href="https://docs.google.com/forms/d/e/1FAIpQLSfAlh5oVrzCdQddUphKbKpTpVHVM_AG0l9l4yxs56_8ZU0fRg/viewform?usp=header"
             target="_blank"
             rel="noopener noreferrer"
             style={styles.enrollLink}

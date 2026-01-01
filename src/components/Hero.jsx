@@ -50,7 +50,7 @@ export default function Hero() {
 
       
       <a
-        href="https://docs.google.com/forms/d/e/1FAIpQLSdUD3wLjNoD_etp8iSnxRppIYqTIAdgit7uqPk6umueLmRLfw/viewform"
+        href="https://docs.google.com/forms/d/e/1FAIpQLSfAlh5oVrzCdQddUphKbKpTpVHVM_AG0l9l4yxs56_8ZU0fRg/viewform?usp=header"
         target="_blank"
         rel="noopener noreferrer"
       >
