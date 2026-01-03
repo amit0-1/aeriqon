@@ -7,7 +7,7 @@ export default function Footer() {
 
         <div style={styles.contact}>
           <p>📞 +91 90580 37616</p>
-          <p>✉️ ariqeon@gmail.com</p>
+          <p>✉️ aeriqon@gmail.com</p>
         </div>
 
         <p style={styles.copy}>
