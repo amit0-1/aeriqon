@@ -69,22 +69,34 @@ export default function Navbar() {
       transition: "transform 0.35s ease",
     }}
     >
-      <nav className="glass"
+      <nav
+        className="glass"
         style={{
-        ...styles.nav,
-        padding: scrolled ? "10px 24px" : "14px 28px",
-        boxShadow: scrolled
-          ? "0 12px 30px rgba(0,0,0,0.25)"
-          : "none",
-          transition: "all 0.3s ease",
+          ...styles.nav,
+        
+          background: scrolled
+            ? "rgba(20, 30, 45, 0.75)"   // solid after scroll
+            : "rgba(20, 30, 45, 0.15)",  // transparent at top
+        
+          backdropFilter: scrolled ? "blur(10px)" : "blur(4px)",
+          WebkitBackdropFilter: scrolled ? "blur(10px)" : "blur(4px)",
+        
+          border: scrolled
+            ? "1px solid rgba(255,255,255,0.08)"
+            : "1px solid rgba(255,255,255,0.04)",
+        
+          boxShadow: scrolled
+            ? "0 6px 18px rgba(0,0,0,0.18)"
+            : "none",
         }}
       >
+
         <div style={styles.brand}>
           <img
             src={darkBg ? logoLight : logoDark}
             alt="Aeriqon"
             style={{
-              height: scrolled ? "42px" : "52px",
+              height: scrolled ? "36px" : "40px",
               transition: "height 0.3s ease",
             }} 
           />
@@ -97,7 +109,7 @@ export default function Navbar() {
           <a href="#courses" className="nav-link">Courses</a>
           <a href="#about" className="nav-link">About</a>
           <a
-            href="https://docs.google.com/forms/d/e/1FAIpQLSfAlh5oVrzCdQddUphKbKpTpVHVM_AG0l9l4yxs56_8ZU0fRg/viewform?usp=header"
+            href="https://docs.google.com/forms/d/e/1FAIpQLSc_iOufBwVDzc9tJYx6gszj-57Y5zMMJlX7HOqwYgDVU33VDw/viewform"
             target="_blank"
             rel="noopener noreferrer"
             style={styles.enrollBtn}
@@ -148,7 +160,7 @@ export default function Navbar() {
           </a>
       
           <a
-            href="https://docs.google.com/forms/d/e/1FAIpQLSfAlh5oVrzCdQddUphKbKpTpVHVM_AG0l9l4yxs56_8ZU0fRg/viewform?usp=header"
+            href="https://docs.google.com/forms/d/e/1FAIpQLSc_iOufBwVDzc9tJYx6gszj-57Y5zMMJlX7HOqwYgDVU33VDw/viewform"
             target="_blank"
             rel="noopener noreferrer"
             style={styles.enrollLink}
@@ -170,26 +182,43 @@ const styles = {
     zIndex: 1000,
   },
 
+  // nav: {
+  //   position: "sticky",
+  //   top: 0,
+  //   zIndex: 1000,
+  //   width: "100%",
+  //   maxWidth: "1200px",
+  //   margin: "12px auto",
+  //   padding: "12px 16px", // ⬅️ smaller padding for mobile
+  //   borderRadius: "16px",
+  //   background: "rgba(255,255,255,0.08)",
+  //   backdropFilter: "blur(18px)",
+  //   WebkitBackdropFilter: "blur(18px)",
+  //   border: "1px solid rgba(255,255,255,0.12)",
+  //   display: "flex",
+  //   alignItems: "center",
+  //   justifyContent: "space-between",
+  //   transition: "all 0.35s ease",
+  // },
+
   nav: {
     position: "sticky",
     top: 0,
     zIndex: 1000,
+
     width: "100%",
     maxWidth: "1200px",
-    margin: "12px auto",
-    padding: "12px 16px", // ⬅️ smaller padding for mobile
-    borderRadius: "16px",
-    background: "rgba(255,255,255,0.08)",
-    backdropFilter: "blur(18px)",
-    WebkitBackdropFilter: "blur(18px)",
-    border: "1px solid rgba(255,255,255,0.12)",
+    margin: "10px auto",
+    padding: "10px 18px",
+
+    borderRadius: "14px",
+
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
+
     transition: "all 0.35s ease",
   },
-
-  
 
   brand: {
     display: "flex",
@@ -202,9 +231,10 @@ const styles = {
   },
 
   name: {
-    fontSize: "22px",
-    fontWeight: "600",
-    color: "#fff",
+    fontSize: "18px",
+    fontWeight: "500",
+    letterSpacing: "0.3px",
+    color: "#e5e7eb",
   },
   links: {
     display: "flex",
